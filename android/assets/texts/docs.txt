@@ -1,0 +1,47 @@
+ROBOT-SPEAK DOCUMENTATION
+
+FOR ALL ROBOT OWNERS
+
+PLEASE READ THROUGHLY
+/s
+HELLO, ROBOT OPERATOR.
+
+AS YOU MAY ALREADY KNOW, YOUR MISSION IS TO COMMUNICATE WITH ALIEN SPECIES.
+
+THESE ALIEN SPECIES ARE AFRAID OF US HUMANS, YOUR TASK IS TO PROGRAM A ROBOT THAT COMMUNICATES WITH THE ALIEN.
+
+THE ALIEN WILL HOPEFULLY RESPOND TO YOUR MESSAGE.
+/s
+THE FOLLOWING IS A DOCUMENTATION OF
+
+ROBOT-SPEAK
+
+WHICH IS THE LANGUAGE OUR ROBOTS USE.
+/s
+Command 1: MOVE
+
+Usage: move <velocity in meters per second> for <time in seconds>
+
+Description: The robot moves left and right. If the velocity value is negative, it will move left, otherwise it will move right.
+If no FOR is specified, the robot will directly continue to perform its next command.
+/s
+Command 2: STOP
+
+Usage: STOP
+Optional: STOP FOR <time in seconds>
+
+Description: The robot stops. If a FOR is specified, the robot waits for the specified amount of time.
+/s
+Command 3: JUMP
+
+Usage: JUMP
+Optional: JUMP <force in newtons>
+Optional: JUMP <force in newtons> FOR <time in seconds>
+
+Description: The robot jumps. If no force is specified, the force will be 500N. If no FOR is specified, the robot will continue with the next command once it lands. Else, it will continue with the next command once the specified time is over.
+/s
+THIS BOOKLET IS LICENSED UNDER NO LICENSE BY GLATTEIS ROBOT TECHNOLOGY
+
+LIBGDX GAME JAM WINTER 2015 / 2016
+
+THEME: LIFE IN SPACE
