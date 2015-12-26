@@ -95,7 +95,7 @@ public class Book {
         stage.addActor(back);
 
         Button.ButtonStyle backStyle = new Button.ButtonStyle();
-        backStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/back.png"))));
+        backStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/cross.png"))));
 
         Button backButton = new Button(backStyle);
         backButton.setBounds(430, 150, 50 ,50);

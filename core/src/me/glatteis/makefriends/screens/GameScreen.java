@@ -86,7 +86,7 @@ public class GameScreen implements Screen, ContactListener {
         batch.setProjectionMatrix(camera.combined);
         world.step(delta, 8, 2);
         robot.getInterpreter().tick(delta);
-        backgroundRenderer.render();
+        backgroundRenderer.render(delta);
         //debugRenderer.render(world, camera.combined);
         alien.render(batch);
         robot.render(batch);
@@ -102,6 +102,7 @@ public class GameScreen implements Screen, ContactListener {
         book.update(width, height);
         viewport.update(width, height);
         uiStage.getViewport().update(width, height);
+        backgroundRenderer.update(width, height);
     }
 
     public void programFinished(boolean failure) {

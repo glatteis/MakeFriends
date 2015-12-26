@@ -64,7 +64,7 @@ public class Robot {
 
         sprite = new Sprite(textures[0]);
 
-        sprite.setSize(2, 2);
+        sprite.setSize(4, 4);
 
         bubbles = new ArrayList<SpeakingBubble>();
     }

@@ -3,8 +3,10 @@ package me.glatteis.makefriends.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import me.glatteis.makefriends.MakeFriends;
 
 /**
@@ -12,8 +14,9 @@ import me.glatteis.makefriends.MakeFriends;
  */
 public class Splash implements Screen {
 
-    private SpriteBatch batch;
-    private Sprite splash;
+    private Stage stage;
+    private Image splash;
+
     private MakeFriends game;
     private float time;
 
@@ -26,26 +29,25 @@ public class Splash implements Screen {
 
     @Override
     public void show() {
-        batch = new SpriteBatch();
-        splash = new Sprite(new Texture(Gdx.files.internal("textures/gui/splash.png")));
-        splash.flip(true, false);
+        stage = new Stage(new FitViewport(480, 320));
+        splash = new Image(new Texture(Gdx.files.internal("textures/gui/splash.png")));
+        splash.setBounds(0, 0, 480, 320);
+        stage.addActor(splash);
         time = 0;
+        stage.addAction(Actions.sequence(Actions.alpha(0), Actions.fadeIn(2), Actions.fadeOut(2)));
     }
 
     @Override
     public void render(float delta) {
-        batch.begin();
-        batch.draw(splash, 0, 0, width, height);
-        batch.end();
-
+        stage.act(delta);
+        stage.draw();
         time += delta;
-        if (time > 1) game.setScreen(new GameScreen());
+        if (time > 4) game.setScreen(new GameScreen());
     }
 
     @Override
     public void resize(int width, int height) {
-        this.width = width;
-        this.height = height;
+        stage.getViewport().update(width, height);
     }
 
     @Override

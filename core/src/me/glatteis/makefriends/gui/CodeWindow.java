@@ -71,10 +71,10 @@ public class CodeWindow {
         stage.addActor(area);
 
         Button.ButtonStyle backStyle = new Button.ButtonStyle();
-        backStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/back.png"))));
+        backStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/cross.png"))));
 
         Button back = new Button(backStyle);
-        back.setBounds(400, 50, 50 ,50);
+        back.setBounds(430, 50, 50 ,50);
         back.addListener(new EventListener() {
             @Override
             public boolean handle(Event event) {
@@ -110,7 +110,7 @@ public class CodeWindow {
 
     public void render(float delta) {
         if (!open) return;
-
+        ScreenDim.renderDim();
         stage.act(delta);
         stage.draw();
     }
