@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import me.glatteis.makefriends.objects.SoundHandler;
 import me.glatteis.makefriends.screens.GameScreen;
 
 /**
@@ -66,6 +67,7 @@ public class Book {
             @Override
             public boolean handle(Event event) {
                 if (event instanceof ChangeListener.ChangeEvent) {
+                    SoundHandler.PAGE_TURN.play(1);
                     current++;
                     if (current == pages.length) {
                         current = 0;
@@ -83,6 +85,7 @@ public class Book {
             @Override
             public boolean handle(Event event) {
                 if (event instanceof ChangeListener.ChangeEvent) {
+                    SoundHandler.PAGE_TURN.play(1);
                     current--;
                     if (current == -1) {
                         current = pages.length - 1;

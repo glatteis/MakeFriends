@@ -45,6 +45,15 @@ public class BackgroundRenderer {
             starStage.addActor(s);
         }
 
+        for (int i = 0; i < 6; i++) {
+            Star cloud = new Star(new Vector2(MathUtils.random(-7, 3) * (MathUtils.randomBoolean() ? -1 : 1), 0), false, 180);
+            cloud.setDrawable(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/stars/cloud.png")))));
+            cloud.setColor(MathUtils.random(), MathUtils.random(), MathUtils.random(), 0.4f);
+            float width = MathUtils.random(50, 150);
+            cloud.setBounds(MathUtils.random(480), MathUtils.random(180, 320),width, width * 0.6f);
+            starStage.addActor(cloud);
+        }
+
         shootingStarDelay = 5;
 
     }
@@ -74,7 +83,7 @@ public class BackgroundRenderer {
         Star shootingStar = new Star(velocity, true, 180);
         shootingStar.setBounds(MathUtils.random(0, 480), 320, 20, 10);
         TextureRegionDrawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/stars/shootingstar.png"))));
-        shootingStar.setColor(MathUtils.random(), MathUtils.random(), MathUtils.random(), MathUtils.random());
+        shootingStar.setColor(MathUtils.random(), MathUtils.random(), MathUtils.random(), 1);
         if (velocity.x > 0) {
             drawable.getRegion().flip(true, false);
         }

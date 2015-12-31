@@ -1,6 +1,7 @@
 package me.glatteis.makefriends.objects;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -16,7 +17,12 @@ import java.util.ArrayList;
  */
 public class Alien {
 
+    private Pixmap meter;
+    private Texture meterTexture;
+
     private int responseCode;
+
+    private int happiness;
 
     private ArrayList<String> seenCommands;
 
@@ -32,16 +38,27 @@ public class Alien {
         texture = textures[MathUtils.random(textures.length - 1)];
         responses = Gdx.files.internal("texts/alienResponses.txt").readString().split("\n");
         bubbles = new ArrayList<SpeakingBubble>();
+        meter = new Pixmap(Gdx.files.internal("textures/gui/happiness_meter.png"));
+        meterTexture = new Texture(meter);
+        seenCommands = new ArrayList<String>();
+        updateMeter();
     }
 
     public void start() {
         bubbles.clear();
         responseCode = 0;
-        seenCommands = new ArrayList<String>();
+        seenCommands.clear();
+        happiness = 0;
+        updateMeter();
+        System.out.println("Alien started!");
     }
 
     public void processCommand(Command command) {
         responseCode += command.getFullCommand().hashCode();
+        if (! seenCommands.contains(command)) {
+            happiness++;
+        }
+        updateMeter();
     }
 
     public void makeDecision() {
@@ -64,6 +81,7 @@ public class Alien {
         }
         batch.begin();
         batch.draw(texture, 14, 3, 4, 4);
+        batch.draw(meterTexture, 0, 0, 12.5f, 3.75f);
         batch.end();
     }
 
@@ -71,6 +89,18 @@ public class Alien {
         for (SpeakingBubble b : bubbles) {
             b.update(width, height);
         }
+    }
+
+    public void updateMeter() {
+        for (int i = 0; i < 10; i++) {
+            if (happiness >= i) {
+                meter.setColor(0.1f, 1, 0.1f, 1);
+            } else {
+                meter.setColor(0, 0, 0, 1);
+            }
+            meter.fillRectangle(i * 10 + 2, 22, 6, 6);
+        }
+        meterTexture.draw(meter, 0, 0);
     }
 
 

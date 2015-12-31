@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Event;
 import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import me.glatteis.makefriends.objects.SoundHandler;
 import me.glatteis.makefriends.screens.GameScreen;
 
 /**
@@ -65,6 +67,17 @@ public class CodeWindow {
         area = new TextArea("", style);
         area.setBounds(25, -10, 400, 300);
         area.setBlinkTime(0.8f);
+
+        area.addListener(new EventListener() {
+            @Override
+            public boolean handle(Event event) {
+                if (event instanceof ChangeListener.ChangeEvent) {
+                    //ChangeListener.ChangeEvent e = (ChangeListener.ChangeEvent) event;
+                    SoundHandler.KEY_SOUNDS[MathUtils.random(SoundHandler.KEY_SOUNDS.length - 1)].play();
+                }
+                return true;
+            }
+        });
 
         stage.setKeyboardFocus(area);
 

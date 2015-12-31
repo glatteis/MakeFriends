@@ -110,7 +110,7 @@ public class CodeInterpreter {
         Timer.post(new Timer.Task() {
             @Override
             public void run() {
-                robot.getBody().setTransform(new Vector2(0, 6), 0);
+                robot.getBody().setTransform(new Vector2(0, 7), 0);
                 robot.getBody().setLinearVelocity(0, 0);
                 gameScreen.programFinished(failure);
             }

@@ -42,13 +42,13 @@ public class Robot {
     public Robot(World world, GameScreen gameScreen) {
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
-        def.position.set(0, 6);
+        def.position.set(0, 7f);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.friction = 0;
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(1, 1);
+        shape.setAsBox(2, 2);
 
         fixtureDef.shape = shape;
 
@@ -71,7 +71,7 @@ public class Robot {
 
     public void render(SpriteBatch batch) {
         sprite.setRegion(textures[direction == Direction.LEFT ? 1 : 0]);
-        sprite.setPosition(body.getWorldCenter().x - 1, body.getWorldCenter().y - 1);
+        sprite.setPosition(body.getWorldCenter().x - 2, body.getWorldCenter().y - 2);
         sprite.setRotation(body.getAngle() * MathUtils.radDeg);
         batch.begin();
         sprite.draw(batch);

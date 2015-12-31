@@ -21,14 +21,15 @@ public class Star extends Image {
     public void act(float delta) {
         setPosition(getX() + velocity.x * delta, getY() + velocity.y * delta);
         if (temporary)  {
-            if (getX() < -10 || getX() > getStage().getWidth() + 10 || getY() < boundsDownY - 10 || getY() > getStage().getHeight() + 10) {
+            if (getX() < -(getWidth() * 1.1f) || getX() > getStage().getWidth() + (getWidth() * 1.1f) ||
+                    getY() < boundsDownY - (getHeight() * 1.1f) || getY() > getStage().getHeight() + (getHeight() * 1.1f)) {
                 remove();
             }
         } else {
-            if (getX() < -10) setX(getStage().getWidth() + 10);
-            if (getX() > getStage().getWidth() + 10) setX(-10);
-            if (getY() < boundsDownY - 10) setY(getStage().getHeight() + 10);
-            if (getY() > getStage().getHeight() + 10) setY(boundsDownY - 10);
+            if (getX() < -(getWidth() * 1.1f)) setX(getStage().getWidth() + (getWidth() * 1.1f));
+            if (getX() > getStage().getWidth() + (getWidth() * 1.1f)) setX(-(getWidth() * 1.1f));
+            if (getY() < boundsDownY - (getHeight() * 1.1f)) setY(getStage().getHeight() + (getHeight() * 1.1f));
+            if (getY() > getStage().getHeight() + (getHeight() * 1.1f)) setY(boundsDownY - (getHeight() * 1.1f));
         }
 
     }

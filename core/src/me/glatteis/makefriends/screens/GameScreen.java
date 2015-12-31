@@ -13,15 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import me.glatteis.makefriends.gui.Book;
 import me.glatteis.makefriends.gui.CodeWindow;
 import me.glatteis.makefriends.logic.command.event.CommandCollisionEvent;
-import me.glatteis.makefriends.objects.Alien;
-import me.glatteis.makefriends.objects.BackgroundRenderer;
-import me.glatteis.makefriends.objects.Robot;
-import me.glatteis.makefriends.objects.WorldCreator;
+import me.glatteis.makefriends.objects.*;
 
 /**
  * Created by Linus on 21.12.2015.
@@ -35,18 +33,23 @@ public class GameScreen implements Screen, ContactListener {
     private Book book;
     private World world;
     private Robot robot;
-    private Box2DDebugRenderer debugRenderer;
+    //private Box2DDebugRenderer debugRenderer;
     private BackgroundRenderer backgroundRenderer;
+    private MusicHandler musicHandler;
     private Alien alien;
+    private boolean fullscreen = false;
 
     private Stage uiStage;
     private Button edit;
     private Button playPause;
     private Button bookButton;
+    private Button fullscreenButton;
     private Button.ButtonStyle playStyle;
     private Button.ButtonStyle pauseStyle;
     private Button.ButtonStyle bookStyle;
     private Button.ButtonStyle editStyle;
+    private Button.ButtonStyle fullscreenStyle;
+    private Button.ButtonStyle windowedStyle;
 
     public Alien getAlien() {
         return alien;
@@ -73,11 +76,13 @@ public class GameScreen implements Screen, ContactListener {
         world.setContactListener(this);
         robot = new Robot(world, this);
         alien = new Alien();
-        debugRenderer = new Box2DDebugRenderer();
+        //debugRenderer = new Box2DDebugRenderer();
         uiStage = new Stage(new FitViewport(480, 320));
         batch = new SpriteBatch();
         backgroundRenderer = new BackgroundRenderer();
         createStage();
+        musicHandler = new MusicHandler();
+        musicHandler.play();
         Gdx.input.setInputProcessor(uiStage);
     }
 
@@ -174,8 +179,10 @@ public class GameScreen implements Screen, ContactListener {
             public boolean handle(Event event) {
                 if (event instanceof ChangeListener.ChangeEvent) {
                     if (robot.getInterpreter().isRunning()) {
+                        SoundHandler.STOP.play(0.1f);
                         robot.getInterpreter().finish(true);
                     } else {
+                        SoundHandler.RUN.play(0.1f);
                         robot.getInterpreter().interpretThis(codeWindow.getArea().getText());
                         playPause.setStyle(pauseStyle);
                         edit.setVisible(false);
@@ -187,6 +194,37 @@ public class GameScreen implements Screen, ContactListener {
             }
         });
         uiStage.addActor(playPause);
+        fullscreenStyle = new Button.ButtonStyle();
+        fullscreenStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/fullscreen.png"))));
+        windowedStyle = new Button.ButtonStyle();
+        windowedStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/windowed.png"))));
+        fullscreenButton = new Button(fullscreenStyle);
+        fullscreenButton.setBounds(0, 0, 30, 30);
+        fullscreenButton.addListener(new EventListener() {
+            @Override
+            public boolean handle(Event event) {
+                if (event instanceof ChangeListener.ChangeEvent) {
+                    if (fullscreen) {
+                        fullscreenButton.setStyle(fullscreenStyle);
+                        Gdx.graphics.setDisplayMode(480, 320, false);
+                        fullscreen = false;
+                    } else {
+                        fullscreenButton.setStyle(windowedStyle);
+                        Gdx.graphics.setDisplayMode(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height, true);
+                        Timer.post(new Timer.Task() {
+                            @Override
+                            public void run() {
+                                resize(Gdx.graphics.getDesktopDisplayMode().width, Gdx.graphics.getDesktopDisplayMode().height);
+                            }
+                        });
+                        fullscreen = true;
+                    }
+                }
+                return true;
+            }
+        });
+        uiStage.addActor(fullscreenButton);
+
 
     }
 
