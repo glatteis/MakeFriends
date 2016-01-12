@@ -36,7 +36,8 @@ public class GameScreen implements Screen, ContactListener {
     //private Box2DDebugRenderer debugRenderer;
     private BackgroundRenderer backgroundRenderer;
     private MusicHandler musicHandler;
-    private Alien alien;
+    private Alien alien1;
+    private Alien alien2;
     private boolean fullscreen = false;
 
     private Stage uiStage;
@@ -51,8 +52,12 @@ public class GameScreen implements Screen, ContactListener {
     private Button.ButtonStyle fullscreenStyle;
     private Button.ButtonStyle windowedStyle;
 
-    public Alien getAlien() {
-        return alien;
+    public Alien getAlien1() {
+        return alien1;
+    }
+
+    public Alien getAlien2() {
+        return alien2;
     }
 
     public Stage getUiStage() {
@@ -61,6 +66,14 @@ public class GameScreen implements Screen, ContactListener {
 
     public Viewport getViewport() {
         return viewport;
+    }
+
+    public MusicHandler getMusicHandler() {
+        return musicHandler;
+    }
+
+    public OrthographicCamera getCamera() {
+        return camera;
     }
 
     @Override
@@ -75,7 +88,8 @@ public class GameScreen implements Screen, ContactListener {
         world = WorldCreator.createWorld();
         world.setContactListener(this);
         robot = new Robot(world, this);
-        alien = new Alien();
+        alien1 = new Alien(Alien.AlienType.ART_ALIEN);
+        alien2 = new Alien(Alien.AlienType.IGN_ALIEN);
         //debugRenderer = new Box2DDebugRenderer();
         uiStage = new Stage(new FitViewport(480, 320));
         batch = new SpriteBatch();
@@ -93,12 +107,14 @@ public class GameScreen implements Screen, ContactListener {
         robot.getInterpreter().tick(delta);
         backgroundRenderer.render(delta);
         //debugRenderer.render(world, camera.combined);
-        alien.render(batch);
+        alien1.render(batch);
+        alien2.render(batch);
         robot.render(batch);
         uiStage.act(delta);
         uiStage.draw();
         codeWindow.render(delta);
         book.render(delta);
+        robot.getInterpreter().renderStage(delta);
     }
 
     @Override
@@ -108,13 +124,17 @@ public class GameScreen implements Screen, ContactListener {
         viewport.update(width, height);
         uiStage.getViewport().update(width, height);
         backgroundRenderer.update(width, height);
+        robot.update(width, height);
     }
 
     public void programFinished(boolean failure) {
         playPause.setStyle(playStyle);
         edit.setVisible(true);
         bookButton.setVisible(true);
-        if (!failure) alien.makeDecision();
+        if (!failure){
+            alien1.makeDecision();
+            alien2.makeDecision();
+        }
     }
 
     @Override
@@ -187,7 +207,8 @@ public class GameScreen implements Screen, ContactListener {
                         playPause.setStyle(pauseStyle);
                         edit.setVisible(false);
                         bookButton.setVisible(false);
-                        alien.start();
+                        alien1.start();
+                        alien2.start();
                     }
                 }
                 return true;

@@ -26,6 +26,7 @@ public class Robot {
     private Sprite sprite;
     private Direction direction = Direction.RIGHT;
     private ArrayList<SpeakingBubble> bubbles;
+    private GameScreen gameScreen;
 
     public void setDirection(Direction direction) {
         this.direction = direction;
@@ -39,7 +40,17 @@ public class Robot {
         return interpreter;
     }
 
+    public GameScreen getGameScreen() {
+        return gameScreen;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
+    }
+
     public Robot(World world, GameScreen gameScreen) {
+        this.gameScreen = gameScreen;
+
         BodyDef def = new BodyDef();
         def.type = BodyDef.BodyType.DynamicBody;
         def.position.set(0, 7f);
@@ -82,11 +93,11 @@ public class Robot {
     public void saySomething(String text, boolean error) {
         Vector2 position;
         if (error){
-            position = new Vector2(250, 150);
+            position = new Vector2(180, 240);
         } else {
             position = interpreter.getGameScreen().getViewport().project(body.getPosition().add(-3, -3));
         }
-        final SpeakingBubble speechBubble = new SpeakingBubble(text, position, true);
+        final SpeakingBubble speechBubble = new SpeakingBubble(text, position, true, false);
         bubbles.add(speechBubble);
         new Timer().scheduleTask(new Timer.Task() {
             @Override
@@ -113,6 +124,7 @@ public class Robot {
         for (SpeakingBubble b : bubbles) {
             b.update(width, height);
         }
+        interpreter.update(width, height);
     }
 
 }

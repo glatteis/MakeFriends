@@ -21,7 +21,7 @@ public class ErrorThrower {
     }
 
     public void throwError(String reason) {
-        reason += " [Line " + line + 1 + "]";
+        reason += " [Line " + (line + 1) + "]";
         robot.saySomething(reason, true);
         interpreter.finish(true);
     }

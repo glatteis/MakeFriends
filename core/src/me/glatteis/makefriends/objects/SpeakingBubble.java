@@ -21,14 +21,16 @@ public class SpeakingBubble {
     private Stage stage;
     private Label bubble;
 
-    public SpeakingBubble(String text, Vector2 position, boolean left) {
+    public SpeakingBubble(String text, Vector2 position, boolean left, boolean texture) {
         stage = new Stage(new FitViewport(480, 320));
 
         Label.LabelStyle bubbleStyle = new Label.LabelStyle();
-        bubbleStyle.background = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(
-                left ? "textures/gui/bubble.png" : "textures/gui/bubble2.png"))));
+        if (texture) {
+            bubbleStyle.background = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal(
+                    left ? "textures/gui/bubble.png" : "textures/gui/bubble2.png"))));
+        }
         bubbleStyle.font = new BitmapFont(Gdx.files.internal("textures/fonts/couriernew/courier.fnt"));
-        bubbleStyle.fontColor = Color.BLACK;
+        bubbleStyle.fontColor = texture ? Color.BLACK : Color.WHITE;
 
         bubble = new Label(text, bubbleStyle);
 
@@ -36,7 +38,7 @@ public class SpeakingBubble {
         bubble.setAlignment(Align.center);
         bubble.setRotation(MathUtils.random(-40, 40));
 
-        bubble.setBounds(position.x, position.y, 200, 100);
+        bubble.setBounds(position.x, position.y, 100, 50);
 
         stage.addActor(bubble);
     }

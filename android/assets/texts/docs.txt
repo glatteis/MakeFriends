@@ -10,29 +10,33 @@ AS YOU MAY ALREADY KNOW, YOUR MISSION IS TO COMMUNICATE WITH ALIEN SPECIES.
 
 THESE ALIEN SPECIES ARE AFRAID OF US HUMANS, YOUR TASK IS TO PROGRAM A ROBOT THAT COMMUNICATES WITH THE ALIEN.
 
-THE ALIEN WILL HOPEFULLY RESPOND TO YOUR MESSAGE.
+THE ALIEN WILL TRY RESPOND TO YOUR MESSAGE.
 /s
 THE FOLLOWING IS A DOCUMENTATION OF
 
 ROBOT-SPEAK
 
 WHICH IS THE LANGUAGE OUR ROBOTS USE.
-/s
-Command 1: MOVE
 
-Usage: move <velocity in meters per second> for <time in seconds>
+IT CONTAINS NOT ALL COMMANDS; MANY ARE HIDDEN AWAY INSIDE OF THIS BOOKLET.
+/s
+SIMPLE COMMANDS
+/s
+MOVE
+
+Usage: MOVE <velocity in meters per second> FOR <time in seconds>
 
 Description: The robot moves left and right. If the velocity value is negative, it will move left, otherwise it will move right.
 If no FOR is specified, the robot will directly continue to perform its next command.
 /s
-Command 2: STOP
+STOP
 
 Usage: STOP
 Optional: STOP FOR <time in seconds>
 
 Description: The robot stops. If a FOR is specified, the robot waits for the specified amount of time.
 /s
-Command 3: JUMP
+JUMP
 
 Usage: JUMP
 Optional: JUMP <force in newtons>
@@ -40,8 +44,34 @@ Optional: JUMP <force in newtons> FOR <time in seconds>
 
 Description: The robot jumps. If no force is specified, the force will be 500N. If no FOR is specified, the robot will continue with the next command once it lands. Else, it will continue with the next command once the specified time is over.
 /s
-THIS BOOKLET IS LICENSED UNDER NO LICENSE BY GLATTEIS ROBOT TECHNOLOGY
+OTHER COMMANDS
 
-LIBGDX GAME JAM WINTER 2015 / 2016
+DIMSCREEN [FLOAT] - dim screen
 
-THEME: LIFE IN SPACE
+YOU CAN FIND MORE COMMANDS BY SOLVING THE RIDDLES AT THE END OF THESE DOCS
+/s
+WRAPPER COMMANDS
+
+WRAPPER COMMANDS ARE COMMANDS THAT WRAP AROUND OTHER COMMANDS.
+HERE ARE A FEW:
+/s
+REPEAT | END
+
+Usage: REPEAT [TIMES REPEATED]
+       <COMMANDS YOU WANT REPEATED>
+       END
+
+Description: The robot repeats the commands you specify.
+/s
+made for LibGDX game jam 2015/2016 by glatteis
+/s
+RIDDLES
+
+HERE ARE A FEW RIDDLES FOR YOU TO SOLVE. THE SOLUTION WILL REVEAL ONE COMMAND PER RIDDLE.
+/s
+Jigsaw
+
+Only Hundred Names Can't Emmit Named Articles.
+/s
+turnallaliensintopixelartsof thee whom bird is named jacques
+/s

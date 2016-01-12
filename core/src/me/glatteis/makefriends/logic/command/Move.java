@@ -30,7 +30,7 @@ public class Move extends Command {
             robot.getBody().setLinearVelocity(f, robot.getBody().getLinearVelocity().y);
             suggestFinish();
         } catch (Exception e) {
-            errorThrower.throwError("That move statement seems to be wrong: " + args);
+            errorThrower.throwError("Wrong move statement: " + args);
         }
     }
 }

@@ -30,6 +30,8 @@ public class CodeWindow {
     private OrthographicCamera camera;
     private GameScreen gameScreen;
 
+    private ScreenDim screenDim;
+
     private TextArea area;
 
     public CodeWindow(final GameScreen gameScreen) {
@@ -41,6 +43,8 @@ public class CodeWindow {
         camera.update();
         //stage.getViewport().setCamera(camera);
         open = false;
+
+        screenDim = new ScreenDim();
 
         Label.LabelStyle screenStyle = new Label.LabelStyle();
         screenStyle.font = new BitmapFont();
@@ -84,7 +88,7 @@ public class CodeWindow {
         stage.addActor(area);
 
         Button.ButtonStyle backStyle = new Button.ButtonStyle();
-        backStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/cross.png"))));
+        backStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/done.png"))));
 
         Button back = new Button(backStyle);
         back.setBounds(430, 50, 50 ,50);
@@ -123,7 +127,7 @@ public class CodeWindow {
 
     public void render(float delta) {
         if (!open) return;
-        ScreenDim.renderDim();
+        screenDim.renderDim(0.7f);
         stage.act(delta);
         stage.draw();
     }

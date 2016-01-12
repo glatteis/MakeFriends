@@ -1,5 +1,6 @@
 package me.glatteis.makefriends.logic.command;
 
+import com.badlogic.gdx.utils.Timer;
 import me.glatteis.makefriends.logic.ErrorThrower;
 import me.glatteis.makefriends.logic.command.event.CommandEvent;
 import me.glatteis.makefriends.objects.Robot;
@@ -10,6 +11,7 @@ import me.glatteis.makefriends.objects.Robot;
 public abstract class Command {
 
     protected Float delay;
+    protected Float currentDelay = null;
     protected String args;
     protected Robot robot;
     protected ErrorThrower errorThrower;
@@ -23,6 +25,10 @@ public abstract class Command {
         this.errorThrower = errorThrower;
     }
 
+    public Float getDelay() {
+        return delay;
+    }
+
     public void setDelay(float delay) {
         this.delay = delay;
     }
@@ -32,17 +38,25 @@ public abstract class Command {
     }
 
     private void finish() {
+        currentDelay = null;
         e.commandFinished();
     }
 
     protected void suggestFinish() {
-        if (delay == null) finish();
+        if (delay == null) Timer.post(new Timer.Task() {
+            @Override
+            public void run() {
+                finish();
+            }
+        });
     }
+
 
     public void tick(float delta) {
         if (delay != null) {
-            delay -= delta;
-            if (delay <= 0) {
+            if (currentDelay == null) currentDelay = delay;
+            currentDelay -= delta;
+            if (currentDelay <= 0) {
                 finish();
             }
         }

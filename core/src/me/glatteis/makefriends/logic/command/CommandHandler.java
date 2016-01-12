@@ -3,10 +3,15 @@ package me.glatteis.makefriends.logic.command;
 import me.glatteis.makefriends.logic.ErrorThrower;
 import me.glatteis.makefriends.objects.Robot;
 
+import java.util.HashMap;
+import java.util.List;
+
 /**
  * Created by Linus on 21.12.2015.
  */
 public class CommandHandler {
+
+    private HashMap<WrapperCommand, List<Command>> wrappedCommands = new HashMap<WrapperCommand, List<Command>>();
 
     public Command getNewCommand(String key, ErrorThrower thrower, Robot robot) {
         Float delay = null;
@@ -21,11 +26,7 @@ public class CommandHandler {
         }
         try {
             final Command c;
-            c = CommandLibrary.getInstanceOfCommand(key.split(" ")[0], key.substring(key.indexOf(" ") + 1), robot, thrower);
-            if (c == null) return null;
-            if (delay != null) {
-                c.setDelay(delay);
-            }
+            c = CommandLibrary.getInstanceOfCommand(key.split(" ")[0], key.substring(key.indexOf(" ") + 1), robot, thrower, wrappedCommands, delay);
             return c;
         } catch (Exception e) {
             return null;

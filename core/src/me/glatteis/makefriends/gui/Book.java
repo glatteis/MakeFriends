@@ -31,6 +31,8 @@ public class Book {
     private Label label;
     private int current;
 
+    private ScreenDim screenDim;
+
 
     public Book(final GameScreen gameScreen) {
         stage = new Stage(new FitViewport(480, 320));
@@ -39,6 +41,8 @@ public class Book {
         camera.update();
         //stage.getViewport().setCamera(camera);
         open = false;
+
+        screenDim = new ScreenDim();
 
         loadDocs();
 
@@ -98,7 +102,7 @@ public class Book {
         stage.addActor(back);
 
         Button.ButtonStyle backStyle = new Button.ButtonStyle();
-        backStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/cross.png"))));
+        backStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("textures/gui/done.png"))));
 
         Button backButton = new Button(backStyle);
         backButton.setBounds(430, 150, 50 ,50);
@@ -139,6 +143,7 @@ public class Book {
 
     public void render(float delta) {
         if (!open) return;
+        screenDim.renderDim(0.7f);
         stage.act(delta);
         stage.draw();
     }
